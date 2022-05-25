@@ -92,14 +92,14 @@ This application does not have any tests.
 ## Questions
 If you have any questions please feel free to contact group members:
 ** **
-**GitHub Username:** kaitlynskinner
+**GitHub Username:** kaitlynskinner - Kaitlyn Skinner 
 **Email:** kaitlyneskinner@gmail.com
 ** **
-**GitHub Username:** 
-**Email:** kaitlyneskinner@gmail.com
+**GitHub Username:**  - Rekha Leelaraman
+**Email:** rekha.leelaraman@gmail.com
 ** **
-**GitHub Username:** 
-**Email:** kaitlyneskinner@gmail.com
+**GitHub Username:** MrBearSir - Oleg
+**Email:** dobrunja90@yahoo.ca
 ** **
-**GitHub Username:** 
-**Email:** kaitlyneskinner@gmail.com
+**GitHub Username:**  - William Chen
+**Email:** wc.businessmail@gmail.com
