@@ -1,12 +1,15 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const userSchema = new Schema(
   {
     username: {
       type: String,
-      required: true,
+      required: 'Username is Required',
       unique: true,
+      minlength: 4,
+      maxlength: 20
     },
     email: {
       type: String,
@@ -16,7 +19,13 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
+      trim: true,
+      required: 'Password is Required',
+      minlength: 6
+    },
+    userCreated: {
+      type: Date,
+      default: Date.now
     },
   },
   // set this to use virtual below
@@ -42,9 +51,9 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-// when we query a user, we'll also get another field called `bookCount` with the number of saved books we have
-userSchema.virtual('bookCount').get(function () {
-  return this.savedBooks.length;
+// when we query a user, we'll also get another field called `courseCount` with the number of saved courses we have
+userSchema.virtual('courseCount').get(function () {
+  return this.savedCourses.length;
 });
 
 const User = model('User', userSchema);
