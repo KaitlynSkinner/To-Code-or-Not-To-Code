@@ -26,16 +26,16 @@ const LoginForm = () => {
       event.stopPropagation();
     }
 
-    try {
-      const { data } = await login({
-        variables: {...userFormData}
-      });
+    // try {
+    //   const { data } = await login({
+    //     variables: {...userFormData}
+    //   });
 
-      Auth.login(data.login.token);
-    } catch (err) {
-      console.error(err);
-      setShowAlert(true);
-    }
+    //   Auth.login(data.login.token);
+    // } catch (err) {
+    //   console.error(err);
+    //   setShowAlert(true);
+    // }
 
     setUserFormData({
       username: '',

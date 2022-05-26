@@ -11,9 +11,9 @@ import { setContext } from '@apollo/client/link/context';
 
 import Navbar from './components/Navbar';
 
-const httpLink = createHttpLink({
-  uri: '/graphql',
-});
+// const httpLink = createHttpLink({
+//   uri: '/graphql',
+// });
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('id_token');
@@ -26,18 +26,37 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
-});
+// const client = new ApolloClient({
+//   link: authLink.concat(httpLink),
+//   cache: new InMemoryCache(),
+// });
 
 function App() {
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider>
+    {/* // <ApolloProvider client={client}> */}
       <Router>
         <>
           <Navbar />
           <Switch>
+            {/* <Routes>
+            <Route 
+                path="/" 
+                element={<Home />} 
+              />
+              <Route 
+                path="/login" 
+                element={<Login />} 
+              />
+              <Route 
+                path="/signup" 
+                element={<Signup />} 
+              />
+              <Route 
+                path="/profile" 
+                element={<Profile />} 
+              />
+            </Routes> */}
             {/* Place routes here */}
           </Switch>
         </>
