@@ -1,14 +1,14 @@
 {
-  "name": "to-code-or-not-to-code",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "server/server.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "watch": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kaitlyn Skinner",
   "license": "ISC",
   "dependencies": {
     "apollo-server-express": "^3.6.1",
@@ -19,7 +19,6 @@
     "mongoose": "^5.9.10"
   },
   "devDependencies": {
-    "nodemon": "^2.0.3",
-    "concurrently": "^5.1.0"
+    "nodemon": "^2.0.3"
   }
 }

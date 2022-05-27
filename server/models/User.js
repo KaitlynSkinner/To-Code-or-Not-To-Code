@@ -1,15 +1,15 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+
+// import schema from Book.js
+const bookSchema = require('./Book');
 
 const userSchema = new Schema(
   {
     username: {
       type: String,
-      required: 'Username is Required',
+      required: true,
       unique: true,
-      minlength: 4,
-      maxlength: 20
     },
     email: {
       type: String,
@@ -19,14 +19,10 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      trim: true,
-      required: 'Password is Required',
-      minlength: 6
+      required: true,
     },
-    userCreated: {
-      type: Date,
-      default: Date.now
-    },
+    // set savedBooks to be an array of data that adheres to the bookSchema
+    savedBooks: [bookSchema],
   },
   // set this to use virtual below
   {
@@ -51,9 +47,9 @@ userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-// when we query a user, we'll also get another field called `courseCount` with the number of saved courses we have
-userSchema.virtual('courseCount').get(function () {
-  return this.savedCourses.length;
+// when we query a user, we'll also get another field called `bookCount` with the number of saved books we have
+userSchema.virtual('bookCount').get(function () {
+  return this.savedBooks.length;
 });
 
 const User = model('User', userSchema);

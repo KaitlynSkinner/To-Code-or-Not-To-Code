@@ -42,14 +42,14 @@ module.exports = {
     const token = signToken(user);
     res.json({ token, user });
   },
-  // save a comment to a user's `savedRecommendations` field by adding it to the set (to prevent duplicates)
+  // save a book to a user's `savedBooks` field by adding it to the set (to prevent duplicates)
   // user comes from `req.user` created in the auth middleware function
-  async saveCourse({ user, body }, res) {
+  async saveBook({ user, body }, res) {
     console.log(user);
     try {
       const updatedUser = await User.findOneAndUpdate(
         { _id: user._id },
-        { $addToSet: { savedCourses: body } },
+        { $addToSet: { savedBooks: body } },
         { new: true, runValidators: true }
       );
       return res.json(updatedUser);
@@ -58,11 +58,11 @@ module.exports = {
       return res.status(400).json(err);
     }
   },
-  // remove a course from `savedCourses`
-  async deleteCourse({ user, params }, res) {
+  // remove a book from `savedBooks`
+  async deleteBook({ user, params }, res) {
     const updatedUser = await User.findOneAndUpdate(
       { _id: user._id },
-      { $pull: { savedCourses: { courseId: params.courseId } } },
+      { $pull: { savedBooks: { bookId: params.bookId } } },
       { new: true }
     );
     if (!updatedUser) {

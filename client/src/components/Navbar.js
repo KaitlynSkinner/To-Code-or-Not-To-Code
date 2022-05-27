@@ -15,19 +15,19 @@ const AppNavbar = () => {
       <Navbar bg='dark' variant='dark' expand='lg'>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
-            {/* include Title to link here */}
+            Google Books Search
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar'>
             <Nav className='ml-auto'>
               <Nav.Link as={Link} to='/'>
-              {/* include Title to link here */}
+                Search For Books
               </Nav.Link>
-              {/* if user is logged in show _____ and logout */}
+              {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/'>
-                    {/* include link above '/' and Title to link here */}
+                  <Nav.Link as={Link} to='/saved'>
+                    See Your Books
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
