@@ -28,6 +28,26 @@ export const loginUser = (userData) => {
   });
 };
 
+export const saveCourse = (courseData, token) => {
+  return fetch('/api/users/courses', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(courseData),
+  });
+};
+
+export const deleteCourse = (courseId, token) => {
+  return fetch(`/api/users/courses/${courseId}`, {
+    method: 'DELETE',
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 // save book data for a logged in user
 export const saveBook = (bookData, token) => {
   return fetch('/api/users', {

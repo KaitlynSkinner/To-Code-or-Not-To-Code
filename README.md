@@ -1,11 +1,11 @@
-# Book_Search_Engine
+# To-Code-or-Not-To-Code 
 
 ## Description
-A fully functioning book search engine that was built using the MERN stack.
+A learner's website for coding where users can create a personal blog with recommended programs, tips and tricks for languages, and career connections. On a landing page users can specifically search for languages and the type of content they want to see.
 
 
 ## User Story
-As an avid reader I would like to search for new books to read so that I can keep an organized list of books to purchase.
+
 
 
 ## Table of Contents
@@ -22,10 +22,7 @@ As an avid reader I would like to search for new books to read so that I can kee
 
 
 ## Features
-* A user can sign up and log in to the application.
-* A user can type a search term in a search box and the results appear.
-* A user can save a book/books under each search result.
-* A user can view their saved books on a separate page.
+
 
 
 ## Technology Used
@@ -72,20 +69,8 @@ To install packages run the following command:
 ## Usage
  Once installed, type ```npm start``` to run the application.
 
-## Deployed Application
-** **
-![Deployed Application](https://github.com/KaitlynSkinner/Book_Search_Engine/blob/05204575cb12a1e9cd54b75ee0b110b5faaf34aa/client/public/images/Signup.png?raw=true)
-** **
-![Deployed Application](https://github.com/KaitlynSkinner/Book_Search_Engine/blob/05204575cb12a1e9cd54b75ee0b110b5faaf34aa/client/public/images/Login.png?raw=true)
-** **
-![Deployed Application](https://github.com/KaitlynSkinner/Book_Search_Engine/blob/05204575cb12a1e9cd54b75ee0b110b5faaf34aa/client/public/images/Search-Books.png?raw=true)
-** **
-![Deployed Application](https://github.com/KaitlynSkinner/Book_Search_Engine/blob/05204575cb12a1e9cd54b75ee0b110b5faaf34aa/client/public/images/Saved-books.png?raw=true)
-** **
-![Deployed Application](https://github.com/KaitlynSkinner/Book_Search_Engine/blob/05204575cb12a1e9cd54b75ee0b110b5faaf34aa/client/public/images/Delete-Books.png?raw=true)
-** **
 
-Deplyed to Heroku - https://obscure-reaches-49667.herokuapp.com/ | https://git.heroku.com/obscure-reaches-49667.git
+## Deployed Application
 
 
 ## License
@@ -105,8 +90,16 @@ This application does not have any tests.
 
 
 ## Questions
-If you have any questions please feel free to contact me.
+If you have any questions please feel free to contact group members:
 ** **
+**GitHub Username:** kaitlynskinner - Kaitlyn Skinner 
 **Email:** kaitlyneskinner@gmail.com
 ** **
-**GitHub Username:** kaitlynskinner
+**GitHub Username:**  - Rekha Leelaraman
+**Email:** rekha.leelaraman@gmail.com
+** **
+**GitHub Username:** MrBearSir - Oleg
+**Email:** dobrunja90@yahoo.ca
+** **
+**GitHub Username:**  - William Chen
+**Email:** wc.businessmail@gmail.com

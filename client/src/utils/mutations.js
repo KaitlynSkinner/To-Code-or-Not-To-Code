@@ -13,13 +13,51 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation addUser($username: String!, $email: String!, $password: String!) {
-    addUser(username: $username, email: $email, password: $password) {
+  mutation addUser($username: String!, $email: String!, $password: String!, isMentor: String!) {
+    addUser(username: $username, email: $email, password: $password, isMentor: $isMentor) {
       token
       user {
         _id
         username
         email
+      }
+    }
+  }
+`;
+
+export const SAVE_COURSE = gql`
+  mutation saveCourse($input: SavedCourseInput!) {
+    saveCourse(input: $input) {
+      _id
+      username
+      email
+      category
+      savedCourses {
+        _id
+        courseId
+        courseTitle
+        category
+        difficultyLevel
+        description
+      }
+    }
+  }
+`;
+
+export const REMOVE_COURSE = gql`
+  mutation removeCourse($courseId: String!) {
+    removeCourse(courseId: $courseId) {
+      _id
+      username
+      email
+      category
+      savedCourses {
+        _id
+        courseId
+        courseTitle
+        category
+        difficultyLevel
+        description
       }
     }
   }
@@ -57,6 +95,78 @@ export const REMOVE_BOOK = gql`
         title
         image
         link
+      }
+    }
+  }
+`;
+
+export const ADD_COMMENT = gql`
+  mutation addComment($input: addCommentInput!) {
+    addComment(input: $input) {
+      _id
+      username
+      email
+      addedComments {
+        commentId
+        aboutMe
+        bootcampExp
+        tipsTricks
+        connections
+        uniInst
+        commentAuthor
+      }
+    }
+  }
+`;
+
+export const REMOVE_COMMENT = gql`
+  mutation removeComment($commentId: String!) {
+    removeComment(commentId: $commentId) {
+      _id
+      username
+      email
+      addedComments {
+        commentId
+        aboutMe
+        bootcampExp
+        tipsTricks
+        connections
+        uniInst
+        commentAuthor
+      }
+    }
+  }
+`;
+
+export const ADD_RECOMMENDATION = gql`
+  mutation addRecommendation($input: addRecommendationInput!) {
+    addRecommendation(input: $input) {
+      _id
+      username
+      email
+      addedRecommendations {
+        recommendationId
+        recommendationText
+        recommendationAuthor
+        upvotedBy
+        downvotedBy
+      }
+    }
+  }
+`;
+
+export const REMOVE_RECOMMENDATION = gql`
+  mutation removeRecommendation($recommendationId: String!) {
+    removeRecommendation(recommendationId: $recommendationId) {
+      _id
+      username
+      email
+      addedRecommendations {
+        recommendationId
+        recommendationText
+        recommendationAuthor
+        upvotedBy
+        downvotedBy
       }
     }
   }

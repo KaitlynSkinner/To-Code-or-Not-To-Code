@@ -6,7 +6,9 @@ export const GET_ME = gql`
       _id
       username
       email
+      isMentor
       bookCount
+      courseCount
       savedBooks {
         _id
         bookId
@@ -15,6 +17,30 @@ export const GET_ME = gql`
         title
         image
         link
+      },
+      savedCourses {
+        _id
+        courseId
+        courseTitle
+        category
+        difficultyLevel
+        description
+      },
+      addedComments {
+        commentId
+        aboutMe
+        bootcampExp
+        tipsTricks
+        connections
+        uniInst
+        commentAuthor
+      },
+      addedRecommendations {
+        recommendationId
+        recommendationText
+        recommendationAuthor
+        upvotedBy
+        downvotedBy
       }
     }
   }
