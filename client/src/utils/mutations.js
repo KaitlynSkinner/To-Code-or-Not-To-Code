@@ -13,8 +13,8 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation addUser($username: String!, $email: String!, $password: String!, isMentor: String!) {
-    addUser(username: $username, email: $email, password: $password, isMentor: $isMentor) {
+  mutation addUser($username: String!, $email: String!, $password: String!) {
+    addUser(username: $username, email: $email, password: $password) {
       token
       user {
         _id
@@ -144,6 +144,7 @@ export const ADD_RECOMMENDATION = gql`
       _id
       username
       email
+      isMentor
       addedRecommendations {
         recommendationId
         recommendationText
@@ -161,6 +162,7 @@ export const REMOVE_RECOMMENDATION = gql`
       _id
       username
       email
+      isMentor
       addedRecommendations {
         recommendationId
         recommendationText

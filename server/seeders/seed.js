@@ -11,7 +11,7 @@ db.once('open', async () => {
     await User.create(userSeeds);
 
     for (let i = 0; i < recommendationSeeds.length; i++) {
-      const { _id, recommendationAuthor } = await Thought.create(recommendationSeeds[i]);
+      const { _id, recommendationAuthor } = await Recommendation.create(recommendationSeeds[i]);
       const user = await User.findOneAndUpdate(
         { username: recommendationAuthor },
         {

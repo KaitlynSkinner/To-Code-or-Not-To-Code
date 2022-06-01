@@ -7,17 +7,7 @@ export const GET_ME = gql`
       username
       email
       isMentor
-      bookCount
       courseCount
-      savedBooks {
-        _id
-        bookId
-        authors
-        description
-        title
-        image
-        link
-      },
       savedCourses {
         _id
         courseId

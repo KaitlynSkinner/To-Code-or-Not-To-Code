@@ -1,12 +1,6 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// import schema from Book.js and Course.js
-const bookSchema = require('./Book');
-const courseSchema = require('./Course');
-const commentSchema = require('./Comment');
-const recommendationSchema = require('./Recommendation');
-
 const userSchema = new Schema(
   {
     username: {
@@ -29,18 +23,25 @@ const userSchema = new Schema(
       required: true,
       default: false
     },
-    savedCourses: [courseSchema],
-    addedComments: [commentSchema],
-    addedRecommendations: [recommendationSchema],
-    // set savedBooks to be an array of data that adheres to the bookSchema
-    savedBooks: [bookSchema],
+    courses: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Course"
+      }
+    ],
+    recommendations: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Recommendation'
+      }
+    ],
   },
-  // set this to use virtual below
-  {
-    toJSON: {
-      virtuals: true,
-    },
-  }
+  // // set this to use virtual below
+  // {
+  //   toJSON: {
+  //     virtuals: true,
+  //   },
+  // }
 );
 
 // hash user password
@@ -59,12 +60,9 @@ userSchema.methods.isCorrectPassword = async function (password) {
 };
 
 // when we query a user, we'll also get another field called `courseCount` with the number of saved courses we have
-userSchema.virtual('bookCount').get(function () {
-  return this.savedBooks.length;
+userSchema.virtual('courseCount').get(function () {
+  return this.savedCourses.length;
 });
-// userSchema.virtual('courseCount').get(function () {
-//   return this.savedCourses.length;
-// });
 
 const User = model('User', userSchema);
 
