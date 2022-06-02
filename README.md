@@ -9,20 +9,14 @@ As an individual I want to attend a coding language related course, or I am curr
 
 
 ## Table of Contents
-  * [Features](#features)
   * [Technology Used](#technologyused)
   * [Installation](#installation)
   * [Usage](#usage)
   * [Deployed Application](#deployedapplication)
   * [License](#license)
-  * [Credits](#credits)
   * [Contribute](#contribute)
   * [Tests](#tests)
   * [Questions](#questions)
-
-
-## Features
-
 
 
 ## Technology Used
@@ -71,14 +65,17 @@ To install packages run the following command:
 
 
 ## Deployed Application
+  ** **
+  ```Server-side Requests```
+  [![Watch the video](https://img.youtube.com/vi/MFtnNJSvT40/0.jpg)](https://www.youtube.com/watch?v=MFtnNJSvT40)
+  ** **
+  ```Prezzi Presentation```
+  https://prezi.com/p/edit/bfazoluc02nx/
+  ** **
 Deployed to Heroku - https://tocodeornottocode.herokuapp.com/ 
 
 ## License
 This application does not have a license. 
-
-
-## Credits
-The application does not have any collaborators at this time.
 
 
 ## Contribute
