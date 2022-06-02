@@ -61,7 +61,19 @@ To install packages run the following command:
 
 
 ## Usage
- Once installed, type ```npm start``` to run the application.
+ Once installed, to run the application, type:
+   ```
+  # to run client folder
+  npm start
+  ```
+  ```
+  # to run server folder
+  node server.js
+  ```
+  ```
+  # to run root folder
+  npm run develop
+  ```
 
 
 ## Deployed Application
