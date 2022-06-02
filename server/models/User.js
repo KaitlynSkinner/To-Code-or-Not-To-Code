@@ -1,6 +1,9 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
+// import schema from Course.js
+const courseSchema = require('./Course');
+
 const userSchema = new Schema(
   {
     username: {
@@ -34,7 +37,7 @@ const userSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'Recommendation'
       }
-    ],
+    ]
   },
   // // set this to use virtual below
   // {

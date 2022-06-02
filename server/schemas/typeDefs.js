@@ -7,6 +7,7 @@ const typeDefs = gql`
     email: String!
     isMentor: String!
     recommendations: [Recommendation]!
+    courses: [Course]!
     couseCount: Int
     savedCourses: [Course]
   }
@@ -30,12 +31,10 @@ const typeDefs = gql`
 
   type Course {
     _id: ID
-    courseId: String!
     institution: String
     courseTitle: String!
-    category: [String]
-    difficultyLevel: [String]
     description: String
+    courseAuthor: String!
   }
 
   type Auth {
@@ -47,17 +46,19 @@ const typeDefs = gql`
     me: User
     users: [User]
     user(username: String!): User
-    mentor(isMentor: String!): User
+    mentors(isMentor: String!): User
     recommendations(username: String!): [Recommendation]
     recommendation(recommendationId: ID): Recommendation
+    courses(username: String!): [Course]
+    course(courseId: ID): Course
   }
 
   input SavedCourseInput {
-    courseId: String!
     institution: String
     courseTitle: String!
     category: String
     description: String
+    courseAuthor: String!
   }
 
   type Mutation {
@@ -72,6 +73,12 @@ const typeDefs = gql`
     ): Recommendation
     removeRecommendation(recommendationId: String!): Recommendation
     removeComment(recommendationId: ID!, commentId: ID!): Recommendation
+    addCourse(
+      institution: String! 
+      courseTitle: String! 
+      description: String!
+      courseAuthor: String!
+    ): Course
     saveCourse(input: SavedCourseInput): User
     removeCourse(courseId: String!): User
   }

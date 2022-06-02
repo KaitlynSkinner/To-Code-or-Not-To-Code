@@ -118,45 +118,45 @@ const resolvers = {
         { new: true }
         );
     },
-    addCourse: async (parent, { institution, courseTitle, description }) => {
-      const course = await Course.create({ institution, courseTitle, description });
+    addCourse: async (parent, { institution, courseTitle, description, courseAuthor }) => {
+      const course = await Course.create({ institution, courseTitle, description, courseAuthor });
 
       await User.findOneAndUpdate(
-        { username: recommendationAuthor },
-        { $addToSet: { recommendations: recommendation._id } }
+        { username: courseAuthor },
+        { $addToSet: { courses: course._id } }
       );
 
-      return recommendation;
+      return course;
     },
     // ** for future development - apis for courses **
-    // saveCourse: async (parent, { input }, context) => {
-    //   if (context.user) {
-    //     const updatedUser = await User.findByIdAndUpdate(
-    //       { _id: context.user._id },
-    //       { $addToSet: { savedCourses: input } },
-    //       { new: true, runValidators: true }
-    //     )
-    //     .populate('savedCourses');
+    saveCourse: async (parent, { input }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { savedCourses: input } },
+          { new: true, runValidators: true }
+        )
+        .populate('savedCourses');
 
-    //     return updatedUser;
-    //   }
+        return updatedUser;
+      }
 
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
-    // removeCourse: async (parent, { courseId }, context) => {
-    //   if (context.user) {
-    //     const updatedUser = await User.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $pull: { savedCourses: { courseId: courseId } } },
-    //       { new: true, }
-    //     )
-    //     .populate('savedCourses');
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removeCourse: async (parent, { courseId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedCourses: { courseId: courseId } } },
+          { new: true, }
+        )
+        .populate('savedCourses');
 
-    //     return updatedUser;
-    //   }
+        return updatedUser;
+      }
 
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+      throw new AuthenticationError('You need to be logged in!');
+    },
   }
 };
 
