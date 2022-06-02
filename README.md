@@ -5,7 +5,7 @@ A learner's website for coding where users can create a personal blog with recom
 
 
 ## User Story
-
+As an individual I want to attend a coding language related course, or I am currently involved in a course. As a user I want an application where I am able to view what previous students thoughts were and any recommendations or tips and tricks, or career connections that past students have experienced. I want to enlist as a student in a course and to be able to build a strong strategy  to better prepare myself. To, during my application process, be as confident as I can in applying as well as interviewing!
 
 
 ## Table of Contents
