@@ -1,12 +1,7 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
-const recommendationSchema = new Schema(
-  {
-    recommendationId: { 
-        type: String,
-        required: true
-    },
+const recommendationSchema = new Schema({
     recommendationText: {
       type: String,
       required: 'Please leave a recommendation!',
@@ -15,27 +10,36 @@ const recommendationSchema = new Schema(
       trim: true,
     },
     recommendationAuthor: {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
+      type: String,
+      required: true,
+      trim: true,
     },
     createdAt: {
       type: Date,
       default: Date.now,
       get: (timestamp) => dateFormat(timestamp),
     },
-    upvotedBy: [
+    comments: [
       {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+        commentText: {
+          type: String,
+          required: true,
+          minlength: 1,
+          maxlength: 280,
+        },
+        commentAuthor: {
+          type: String,
+          required: true,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+          get: (timestamp) => dateFormat(timestamp),
+        },
       },
     ],
-    downvotedBy: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-      },
-    ]
-  }
-);
+});
 
-module.exports = recommendationSchema;
+const Recommendation = model('Recommendation', recommendationSchema);
+
+module.exports = Recommendation;

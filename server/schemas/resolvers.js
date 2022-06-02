@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Book, Course, Recommendation, Comment } = require('../models');
+const { User, Course, Recommendation, Comment } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -17,30 +17,34 @@ const resolvers = {
     users: async () => {
       return User.find()
         .select('-__v -password')
-        .populate('courses')
-        .populate('comments');
+        .populate('recommendations')
+        .populate('courses');
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
         .select('-__v -password')
-        .populate('courses')
-        .populate('comments');
+        .populate('recommendations')
+        .populate('courses');
     },
-    // comments: async (parent, { username }) => {
-    //   const params = username ? { username } : {};
-    //   return Comment.find(params).sort({ createdAt: -1 });
-    // },
-    // comment: async (parent, { commentId }) => {
-    //   return Comment.findOne({ _id: commentId });
-    // }
+    recommendations: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Recommendation.find(params).sort({ createdAt: -1 });
+    },
+    recommendation: async (parent, { recommendationId }) => {
+      return Recommendation.findOne({ _id: recommendationId });
+    }
   },
 
   Mutation: {
     addUser: async (parent, args) => {
       try {
+        // First we create the user
         const user = await User.create(args);
+
+        // To reduce friction for the user, we immediately sign a JSON Web Token and log the user in after they are created
         const token = signToken(user);
-  
+
+        // Return an `Auth` object that consists of the signed token and user's information
         return { token, user };
       } catch (err) {
         console.log(err);
@@ -50,7 +54,7 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { user: { _id: id } } },
+          { $pull: { users: { username, email, password } } },
           { new: true, }
         )
 
@@ -60,49 +64,71 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     login: async (parent, { email, password }) => {
+      // Look up the user by the provided email address. Since the `email` field is unique, we know that only one person will exist with that email
       const user = await User.findOne({ email });
 
+      // If there is no user with that email address, return an Authentication error stating so
       if (!user) {
         throw new AuthenticationError('Incorrect credentials');
       }
 
+      // If there is a user found, execute the `isCorrectPassword` instance method and check if the correct password was provided
       const correctPw = await user.isCorrectPassword(password);
 
+      // If the password is incorrect, return an Authentication error stating so
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
       }
 
+      // If email and password are correct, sign user into the application with a JWT
       const token = signToken(user);
+
+      // Return an `Auth` object that consists of the signed token and user's information
       return { token, user };
     },
-    saveBook: async (parent, { input }, context) => {
-      if (context.user) {
-        const updatedUser = await User.findByIdAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { savedBooks: input } },
-          { new: true, runValidators: true }
-        )
-        .populate('savedBooks');
+    addRecommendation: async (parent, { recommendationText, recommendationAuthor }) => {
+      const recommendation = await Recommendation.create({ recommendationText, recommendationAuthor });
 
-        return updatedUser;
-      }
+      await User.findOneAndUpdate(
+        { username: recommendationAuthor },
+        { $addToSet: { recommendations: recommendation._id } }
+      );
 
-      throw new AuthenticationError('You need to be logged in!');
+      return recommendation;
     },
-    removeBook: async (parent, { bookId }, context) => {
-      if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { savedBooks: { bookId: bookId } } },
-          { new: true, }
-        )
-        .populate('savedBooks');
-
-        return updatedUser;
-      }
-
-      throw new AuthenticationError('You need to be logged in!');
+    addComment: async (parent, { recommendationId, commentText, commentAuthor }) => {
+      return Recommendation.findOneAndUpdate(
+        { _id: recommendationId },
+        { 
+          $addToSet: { comments: { commentText, commentAuthor } } 
+        },
+        { 
+          new: true, 
+          runValidators: true 
+        }
+      );
     },
+    removeRecommendation: async (parent, { recommendationId }) => {
+      return Recommendation.findOneAndDelete({ _id: recommendationId });
+    },
+    removeComment: async (parent, { recommendationId, commentId }) => {
+      return Recommendation.findOneAndUpdate(
+        { _id: recommendationId },
+        { $pull: { comments: { _id: commentId} } },
+        { new: true }
+        );
+    },
+    addCourse: async (parent, { institution, courseTitle, description, courseAuthor }) => {
+      const course = await Course.create({ institution, courseTitle, description, courseAuthor });
+
+      await User.findOneAndUpdate(
+        { username: courseAuthor },
+        { $addToSet: { courses: course._id } }
+      );
+
+      return course;
+    },
+    // ** for future development - apis for courses **
     saveCourse: async (parent, { input }, context) => {
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
@@ -130,32 +156,6 @@ const resolvers = {
       }
 
       throw new AuthenticationError('You need to be logged in!');
-    },
-    addComment: async (parent, { input, commentAuthor }, context) => {
-      const comment = await Comment.create({ commentAuthor });
-
-      await User.findOneAndUpdate(
-        { username: commentAuthor },
-        { $addToSet: { comments: comment._id } }
-      );
-
-      return comment;
-    },
-    removeComment: async (parent, { commentId }) => {
-      return Comment.findOneAndDelete({ _id: commentId });
-    },
-    addRecommendation: async (parent, { input, recommendationAuthor, isMentor }, context) => {
-      const recommendation = await Recommendation.create({ recommendationAuthor });
-
-      await User.findOneAndUpdate(
-        { isMentor: recommendationAuthor },
-        { $addToSet: { addedRecommendations: recommendation._id } }
-      );
-
-      return recommendation;
-    },
-    removeRecommendation: async (parent, { recommendationId }) => {
-      return Recommendation.findOneAndDelete({ _id: recommendationId });
     },
   }
 };
